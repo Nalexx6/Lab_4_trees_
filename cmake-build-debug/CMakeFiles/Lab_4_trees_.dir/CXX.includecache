@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.cpp
+Functions.h
+D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.h
+
+D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.h
+Tree.h
+D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.h
+
+D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.h
+iostream
+-
+vector
+-
+

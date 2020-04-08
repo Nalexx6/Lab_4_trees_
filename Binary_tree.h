@@ -20,6 +20,7 @@ private:
         Node* left;
         Node* right;
         Node* father;
+        bool li, ri;
         int key;
         int count;
 
@@ -29,6 +30,8 @@ private:
             this->right = nullptr;
             this->left = nullptr;
             this->father = nullptr;
+            this->li = true;
+            this->ri = true;
             count = 1;
         }
     };
@@ -50,17 +53,17 @@ public:
 
     //Printing
 
-    void print_all_tree();
-    void print_node(Node* node);
+    void print_all_tree(bool threaded);
+    void print_node(Node* node, bool threaded);
 
     //Delete
 
     Binary_tree* delete_element(std::vector <int> &path);
 
+    //Threading
 
-
-
-
+    void thread_tree();
+    void thread_node(Node* node);
 
 };
 

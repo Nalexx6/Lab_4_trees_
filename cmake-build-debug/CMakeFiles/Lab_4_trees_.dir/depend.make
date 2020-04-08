@@ -15,6 +15,10 @@ CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj: ../Mode.cpp
 CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj: ../Mode.h
 CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj: ../Tree.h
 
+CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj: ../Binary_tree.h
+CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj: ../Threaded_tree.cpp
+CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj: ../Threaded_tree.h
+
 CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj: ../Tree.cpp
 CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj: ../Tree.h
 

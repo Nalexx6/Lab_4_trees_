@@ -13,7 +13,8 @@ void Functions::binary_tree_interactive() {
         std::cout<<"Please choose what you want to do with your tree\n"
                    "1 - Add new element\n"
                    "2 - Print all data from tree\n"
-                   "3 - Delete element\n";
+                   "3 - Delete element\n"
+                   "4 - Thread tree and print all data from tree\n";
         int key;
         std::cin>>key;
         if(key == 1){
@@ -24,7 +25,7 @@ void Functions::binary_tree_interactive() {
 
         }
         if(key == 2){
-            tree->print_all_tree();
+            tree->print_all_tree(false);
         }
         if(key == 3){
             std::cout<<"Enter the path to the element which you want to delete\n"
@@ -38,8 +39,12 @@ void Functions::binary_tree_interactive() {
             }
             Binary_tree* remainder = tree->delete_element(path);
             std::cout<<"There is remanding tree after deleting\n";
-            remainder->print_all_tree();
+            remainder->print_all_tree(false);
             delete remainder;
+        }
+        if(key == 4){
+            tree->thread_tree();
+            tree->print_all_tree(true);
         }
 
         std::cout<<"If you want to do anything else with your tree, press 'y', press 'n', if you don`t\n";

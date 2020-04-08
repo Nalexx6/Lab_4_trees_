@@ -203,32 +203,32 @@ Mode.cpp.s:
 	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Mode.cpp.s
 .PHONY : Mode.cpp.s
 
-Stitched_tree.obj: Stitched_tree.cpp.obj
+Threaded_tree.obj: Threaded_tree.cpp.obj
 
-.PHONY : Stitched_tree.obj
+.PHONY : Threaded_tree.obj
 
 # target to build an object file
-Stitched_tree.cpp.obj:
-	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Stitched_tree.cpp.obj
-.PHONY : Stitched_tree.cpp.obj
+Threaded_tree.cpp.obj:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj
+.PHONY : Threaded_tree.cpp.obj
 
-Stitched_tree.i: Stitched_tree.cpp.i
+Threaded_tree.i: Threaded_tree.cpp.i
 
-.PHONY : Stitched_tree.i
+.PHONY : Threaded_tree.i
 
 # target to preprocess a source file
-Stitched_tree.cpp.i:
-	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Stitched_tree.cpp.i
-.PHONY : Stitched_tree.cpp.i
+Threaded_tree.cpp.i:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.i
+.PHONY : Threaded_tree.cpp.i
 
-Stitched_tree.s: Stitched_tree.cpp.s
+Threaded_tree.s: Threaded_tree.cpp.s
 
-.PHONY : Stitched_tree.s
+.PHONY : Threaded_tree.s
 
 # target to generate assembly for a file
-Stitched_tree.cpp.s:
-	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Stitched_tree.cpp.s
-.PHONY : Stitched_tree.cpp.s
+Threaded_tree.cpp.s:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.s
+.PHONY : Threaded_tree.cpp.s
 
 Tree.obj: Tree.cpp.obj
 
@@ -302,9 +302,9 @@ help:
 	@echo ... Mode.obj
 	@echo ... Mode.i
 	@echo ... Mode.s
-	@echo ... Stitched_tree.obj
-	@echo ... Stitched_tree.i
-	@echo ... Stitched_tree.s
+	@echo ... Threaded_tree.obj
+	@echo ... Threaded_tree.i
+	@echo ... Threaded_tree.s
 	@echo ... Tree.obj
 	@echo ... Tree.i
 	@echo ... Tree.s

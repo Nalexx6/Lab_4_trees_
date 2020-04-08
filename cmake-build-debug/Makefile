@@ -122,6 +122,33 @@ Lab_4_trees_/fast:
 	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/build
 .PHONY : Lab_4_trees_/fast
 
+Binary_tree.obj: Binary_tree.cpp.obj
+
+.PHONY : Binary_tree.obj
+
+# target to build an object file
+Binary_tree.cpp.obj:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.obj
+.PHONY : Binary_tree.cpp.obj
+
+Binary_tree.i: Binary_tree.cpp.i
+
+.PHONY : Binary_tree.i
+
+# target to preprocess a source file
+Binary_tree.cpp.i:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.i
+.PHONY : Binary_tree.cpp.i
+
+Binary_tree.s: Binary_tree.cpp.s
+
+.PHONY : Binary_tree.s
+
+# target to generate assembly for a file
+Binary_tree.cpp.s:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.s
+.PHONY : Binary_tree.cpp.s
+
 Functions.obj: Functions.cpp.obj
 
 .PHONY : Functions.obj
@@ -175,6 +202,33 @@ Mode.s: Mode.cpp.s
 Mode.cpp.s:
 	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Mode.cpp.s
 .PHONY : Mode.cpp.s
+
+Stitched_tree.obj: Stitched_tree.cpp.obj
+
+.PHONY : Stitched_tree.obj
+
+# target to build an object file
+Stitched_tree.cpp.obj:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Stitched_tree.cpp.obj
+.PHONY : Stitched_tree.cpp.obj
+
+Stitched_tree.i: Stitched_tree.cpp.i
+
+.PHONY : Stitched_tree.i
+
+# target to preprocess a source file
+Stitched_tree.cpp.i:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Stitched_tree.cpp.i
+.PHONY : Stitched_tree.cpp.i
+
+Stitched_tree.s: Stitched_tree.cpp.s
+
+.PHONY : Stitched_tree.s
+
+# target to generate assembly for a file
+Stitched_tree.cpp.s:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Stitched_tree.cpp.s
+.PHONY : Stitched_tree.cpp.s
 
 Tree.obj: Tree.cpp.obj
 
@@ -239,12 +293,18 @@ help:
 	@echo ... Lab_4_trees_
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Binary_tree.obj
+	@echo ... Binary_tree.i
+	@echo ... Binary_tree.s
 	@echo ... Functions.obj
 	@echo ... Functions.i
 	@echo ... Functions.s
 	@echo ... Mode.obj
 	@echo ... Mode.i
 	@echo ... Mode.s
+	@echo ... Stitched_tree.obj
+	@echo ... Stitched_tree.i
+	@echo ... Stitched_tree.s
 	@echo ... Tree.obj
 	@echo ... Tree.i
 	@echo ... Tree.s

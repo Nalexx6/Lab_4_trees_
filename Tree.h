@@ -27,24 +27,29 @@ class Tree {
         }
 
     };
-//    static int tree_limit;
-//    unsigned key_counter;
     Node* root;
 public:
 
-    std::vector<Node*> elements;
 
     Tree();
 
-    //Add elements
+    //Auxiliary
 
     std::vector <int> get_path(Node* node);
     Node* get_key(std::vector <int> &path);
+
+    //Insert
     void insert(std::vector <int> &path, int &value);
+
+    //Printing
+
 
     void print_all_tree();
     void print_node(Node* node);
 
+    //Delete
+
+    Tree* delete_element(std::vector <int> &path);
 
 
 

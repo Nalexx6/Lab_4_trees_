@@ -7,13 +7,7 @@
 
 
 Tree::Tree() {
-
-//        this->tree_limit = tree_limit;
-//        this->key_counter = 0;
         this->root = nullptr;
-//        root = new Node(key_counter, root_value);
-//        key_counter++;
-
 }
 
 std::vector<int> Tree::get_path(Node* node) {
@@ -43,7 +37,6 @@ void Tree::insert(std::vector<int> &path, int &value) {
     if(root == nullptr){
         unsigned key = 0;
         root = new Node(key, value);
-        elements.push_back(root);
         return;
 
     }
@@ -52,12 +45,15 @@ void Tree::insert(std::vector<int> &path, int &value) {
     Node* add = new Node(size, value);
     temp->sons.push_back(add);
     add->father = temp;
-    elements.push_back(add);
 
 }
 
 void Tree::print_all_tree() {
 
+    if(root == nullptr){
+        std::cout<<"Tree is empty, nothing to print\n";
+        return;
+    }
     std::cout<<"This printing mode print value of element and path to it by indexes in arrays of sons\n";
     print_node(root);
 
@@ -65,8 +61,10 @@ void Tree::print_all_tree() {
 
 void Tree::print_node(Tree::Node *node) {
 
+    if(node == nullptr)
+        return;
     std::vector <int> path = get_path(node);
-    std::cout<<"Element\t"<<node->value<<"\tPath to it:";
+    std::cout<<"Element value\t"<<node->value<<"\tPath to it:";
     if(node == root){
         std::cout<<" root - no path\n";
     }
@@ -81,3 +79,23 @@ void Tree::print_node(Tree::Node *node) {
     }
 
 }
+
+Tree* Tree::delete_element(std::vector<int> &path) {
+
+    Node* temp = get_key(path);
+    Tree* remainder = new Tree;
+    remainder->root = temp;
+    if(temp == root){
+        root = nullptr;
+        return remainder;
+    }
+    for(int i = temp->key + 1; i < temp->father->sons.size(); i++){
+        temp->father->sons[i]->key--;
+    }
+    temp->father->sons.erase(temp->father->sons.begin() + temp->key);
+    temp->father = nullptr;
+    return remainder;
+
+}
+
+

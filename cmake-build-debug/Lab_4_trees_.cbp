@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.cpp">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.cpp">
 			<Option target="Lab_4_trees_"/>
 		</Unit>
@@ -90,6 +96,12 @@
 			<Option target="Lab_4_trees_"/>
 		</Unit>
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Mode.h">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Stitched_tree.cpp">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Stitched_tree.h">
 			<Option target="Lab_4_trees_"/>
 		</Unit>
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.cpp">

@@ -6,11 +6,13 @@
 #define LAB_4_TREES__FUNCTIONS_H
 
 #include "Tree.h"
+#include "Binary_tree.h"
 
 class Functions {
 public:
 
     static void tree_interactive();
+    static void binary_tree_interactive();
 
 };
 

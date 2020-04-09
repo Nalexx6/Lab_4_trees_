@@ -13,6 +13,8 @@ public:
 
     static void tree_interactive();
     static void binary_tree_interactive();
+    static void tree_demo();
+    static void binary_tree_demo();
 
 };
 

@@ -9,7 +9,7 @@ int main() {
 
         std::cout<<"Hello, please choose the mode\n"
                    "1 - Interactive\n"
-                   "2 -  Demo\n";
+                   "2 - Demo\n";
         int key;
         std::cin>>key;
         if(key == 1)

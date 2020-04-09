@@ -147,7 +147,7 @@ void Binary_tree::thread_node(Binary_tree::Node *node) {
     }
     Node* son;
 
-    if(node->left != nullptr){
+    if(node->left != nullptr && node->li){
         son = node->left;
         while (son->right != nullptr){
             son = son->right;
@@ -155,7 +155,7 @@ void Binary_tree::thread_node(Binary_tree::Node *node) {
         son->right = node;
         son->ri = false;
     }
-    if(node->right != nullptr){
+    if(node->right != nullptr && node->ri){
         son = node->right;
         while (son->left != nullptr){
             son = son->left;
@@ -167,5 +167,32 @@ void Binary_tree::thread_node(Binary_tree::Node *node) {
         thread_node(node->left);
     if(node->ri)
         thread_node(node->right);
+}
+
+void Binary_tree::unthread_tree() {
+
+    unthread_node(root);
+
+}
+
+void Binary_tree::unthread_node(Binary_tree::Node *node) {
+
+    if(node == nullptr){
+        return;
+    }
+    if(node->li){
+        unthread_node(node->left);
+    }
+    else{
+        node->left = nullptr;
+        node->li = true;
+    }
+    if(node->ri){
+        unthread_node(node->right);
+    }
+    else{
+        node->right = nullptr;
+        node->ri = true;
+    }
 
 }

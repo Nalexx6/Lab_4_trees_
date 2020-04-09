@@ -64,6 +64,8 @@ public:
 
     void thread_tree();
     void thread_node(Node* node);
+    void unthread_tree();
+    void unthread_node(Node* node);
 
 };
 

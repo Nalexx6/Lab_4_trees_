@@ -14,7 +14,8 @@ void Functions::binary_tree_interactive() {
                    "1 - Add new element\n"
                    "2 - Print all data from tree\n"
                    "3 - Delete element\n"
-                   "4 - Thread tree and print all data from tree\n";
+                   "4 - Thread tree and print all data from tree,\n"
+                   "(after that we will unthread our tree to continue doing something with it)\n";
         int key;
         std::cin>>key;
         if(key == 1){
@@ -45,6 +46,8 @@ void Functions::binary_tree_interactive() {
         if(key == 4){
             tree->thread_tree();
             tree->print_all_tree(true);
+            tree->unthread_tree();
+
         }
 
         std::cout<<"If you want to do anything else with your tree, press 'y', press 'n', if you don`t\n";
@@ -108,4 +111,79 @@ void Functions::tree_interactive() {
     }
     delete tree;
 
+}
+
+void Functions::binary_tree_demo() {
+
+    Binary_tree* tree = new Binary_tree;
+    int v_1 = 20, v_2 = 10, v_3 = 5, v_4 = 15, v_5 = 17;
+    std::string breakpoint;
+    std::cout<<"Firstly, we will add 5 elements to our binary tree,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->insert(v_1);
+    tree->insert(v_2);
+    tree->insert(v_3);
+    tree->insert(v_4);
+    tree->insert(v_5);
+
+    std::cout<<"Now we will print all data from our tree,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->print_all_tree(false);
+    std::cout<<"Now we will delete element with path 0, 1 and print remainder tree\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    std::vector <int> path = {0, 1};
+    Binary_tree* remainder = tree->delete_element(path);
+    remainder->print_all_tree(false);
+
+    std::cout<<"Now we will print all data from our tree,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->print_all_tree(false);
+
+    std::cout<<"Now we will thread our tree and print all data,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->thread_tree();
+    tree->print_all_tree(true);
+    tree->unthread_tree();
+
+    std::cout<<"This is the end of demo for this type of tree\n";
+
+}
+
+void Functions::tree_demo() {
+
+    Tree* tree = new Tree;
+    int v_1 = 20, v_2 = 10, v_3 = 5, v_4 = 15, v_5 = 17;
+    std::vector <int> path_1 = {}, path_2 = {}, path_3 = {}, path_4 = {0}, path_5 = {0};
+    std::string breakpoint;
+    std::cout<<"Firstly, we will add 5 elements to our binary tree,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->insert(path_1, v_1);
+    tree->insert(path_2, v_2);
+    tree->insert(path_3, v_3);
+    tree->insert(path_4, v_4);
+    tree->insert(path_5, v_5);
+
+    std::cout<<"Now we will print all data from our tree,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->print_all_tree();
+    std::cout<<"Now we will delete element with path 0 and print remainder tree \n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    std::vector <int> path = {0};
+    Tree* remainder = tree->delete_element(path);
+    remainder->print_all_tree();
+
+    std::cout<<"Now we will print all data from our tree,\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    tree->print_all_tree();
+
+    std::cout<<"This is the end of demo for this type of tree\n";
 }

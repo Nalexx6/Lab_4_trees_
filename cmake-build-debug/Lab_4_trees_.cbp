@@ -86,6 +86,18 @@
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h">
 			<Option target="Lab_4_trees_"/>
 		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.cpp">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.h">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.cpp">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
+		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.h">
+			<Option target="Lab_4_trees_"/>
+		</Unit>
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.cpp">
 			<Option target="Lab_4_trees_"/>
 		</Unit>
@@ -96,12 +108,6 @@
 			<Option target="Lab_4_trees_"/>
 		</Unit>
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Mode.h">
-			<Option target="Lab_4_trees_"/>
-		</Unit>
-		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Threaded_tree.cpp">
-			<Option target="Lab_4_trees_"/>
-		</Unit>
-		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Threaded_tree.h">
 			<Option target="Lab_4_trees_"/>
 		</Unit>
 		<Unit filename="D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.cpp">

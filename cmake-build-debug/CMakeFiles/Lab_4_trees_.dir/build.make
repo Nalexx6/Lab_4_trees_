@@ -121,18 +121,31 @@ CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.s"
 	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Binary_tree.cpp" -o CMakeFiles\Lab_4_trees_.dir\Binary_tree.cpp.s
 
-CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj: CMakeFiles/Lab_4_trees_.dir/flags.make
-CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj: ../Threaded_tree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Lab_4_trees_.dir\Threaded_tree.cpp.obj -c "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Threaded_tree.cpp"
+CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj: CMakeFiles/Lab_4_trees_.dir/flags.make
+CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj: ../Expression.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Lab_4_trees_.dir\Expression.cpp.obj -c "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Expression.cpp"
 
-CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Threaded_tree.cpp" > CMakeFiles\Lab_4_trees_.dir\Threaded_tree.cpp.i
+CMakeFiles/Lab_4_trees_.dir/Expression.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Lab_4_trees_.dir/Expression.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Expression.cpp" > CMakeFiles\Lab_4_trees_.dir\Expression.cpp.i
 
-CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Threaded_tree.cpp" -o CMakeFiles\Lab_4_trees_.dir\Threaded_tree.cpp.s
+CMakeFiles/Lab_4_trees_.dir/Expression.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Lab_4_trees_.dir/Expression.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Expression.cpp" -o CMakeFiles\Lab_4_trees_.dir\Expression.cpp.s
+
+CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj: CMakeFiles/Lab_4_trees_.dir/flags.make
+CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj: ../Expr_tree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Lab_4_trees_.dir\Expr_tree.cpp.obj -c "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Expr_tree.cpp"
+
+CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Expr_tree.cpp" > CMakeFiles\Lab_4_trees_.dir\Expr_tree.cpp.i
+
+CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\Expr_tree.cpp" -o CMakeFiles\Lab_4_trees_.dir\Expr_tree.cpp.s
 
 # Object files for target Lab_4_trees_
 Lab_4_trees__OBJECTS = \
@@ -141,7 +154,8 @@ Lab_4_trees__OBJECTS = \
 "CMakeFiles/Lab_4_trees_.dir/Functions.cpp.obj" \
 "CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj" \
 "CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.obj" \
-"CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj"
+"CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj" \
+"CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj"
 
 # External object files for target Lab_4_trees_
 Lab_4_trees__EXTERNAL_OBJECTS =
@@ -151,12 +165,13 @@ Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Functions.cpp.obj
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.obj
-Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj
+Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj
+Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/build.make
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/linklibs.rsp
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/objects1.rsp
 Lab_4_trees_.exe: CMakeFiles/Lab_4_trees_.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Lab_4_trees_.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\C++\1\1 course 2nd term(2020)\Lab.4(trees)\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Lab_4_trees_.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Lab_4_trees_.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

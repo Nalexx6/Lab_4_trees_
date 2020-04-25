@@ -187,3 +187,28 @@ void Functions::tree_demo() {
 
     std::cout<<"This is the end of demo for this type of tree\n";
 }
+
+void Functions::expression_interactive() {
+
+    char response = 'y';
+    while(response == 'y') {
+        std::cout<<"Please enter the CORRECT expression\n";
+        std::string expr;
+        getline(std::cin>>std::ws, expr);
+//        std::cout<<"Please choose the mode\n"
+//                   "1 - Counting of expression\n"
+//                   "2 - Derivation of expresion\n";
+//        int key;
+//        std::cin>>key;
+//        if(key == 1)
+//        if(key == 2)
+//            Mode::demo();
+        std::cout<<expr<<"\n";
+        Expression* expression = new Expression(expr);
+        expression->count();
+        std::cout<<"If you want to execute another mode press 'y', press 'n', if you don`t\n";
+        std::cin>>response;
+
+    }
+
+}

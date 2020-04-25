@@ -5,9 +5,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.obj"
+  "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj"
+  "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj"
   "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Functions.cpp.obj"
   "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Mode.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj"
-  "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Threaded_tree.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj"
   "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj"
   "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/main.cpp" "D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/cmake-build-debug/CMakeFiles/Lab_4_trees_.dir/main.cpp.obj"
   )

@@ -149,6 +149,60 @@ Binary_tree.cpp.s:
 	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.s
 .PHONY : Binary_tree.cpp.s
 
+Expr_tree.obj: Expr_tree.cpp.obj
+
+.PHONY : Expr_tree.obj
+
+# target to build an object file
+Expr_tree.cpp.obj:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj
+.PHONY : Expr_tree.cpp.obj
+
+Expr_tree.i: Expr_tree.cpp.i
+
+.PHONY : Expr_tree.i
+
+# target to preprocess a source file
+Expr_tree.cpp.i:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.i
+.PHONY : Expr_tree.cpp.i
+
+Expr_tree.s: Expr_tree.cpp.s
+
+.PHONY : Expr_tree.s
+
+# target to generate assembly for a file
+Expr_tree.cpp.s:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.s
+.PHONY : Expr_tree.cpp.s
+
+Expression.obj: Expression.cpp.obj
+
+.PHONY : Expression.obj
+
+# target to build an object file
+Expression.cpp.obj:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj
+.PHONY : Expression.cpp.obj
+
+Expression.i: Expression.cpp.i
+
+.PHONY : Expression.i
+
+# target to preprocess a source file
+Expression.cpp.i:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Expression.cpp.i
+.PHONY : Expression.cpp.i
+
+Expression.s: Expression.cpp.s
+
+.PHONY : Expression.s
+
+# target to generate assembly for a file
+Expression.cpp.s:
+	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Expression.cpp.s
+.PHONY : Expression.cpp.s
+
 Functions.obj: Functions.cpp.obj
 
 .PHONY : Functions.obj
@@ -202,33 +256,6 @@ Mode.s: Mode.cpp.s
 Mode.cpp.s:
 	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Mode.cpp.s
 .PHONY : Mode.cpp.s
-
-Threaded_tree.obj: Threaded_tree.cpp.obj
-
-.PHONY : Threaded_tree.obj
-
-# target to build an object file
-Threaded_tree.cpp.obj:
-	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj
-.PHONY : Threaded_tree.cpp.obj
-
-Threaded_tree.i: Threaded_tree.cpp.i
-
-.PHONY : Threaded_tree.i
-
-# target to preprocess a source file
-Threaded_tree.cpp.i:
-	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.i
-.PHONY : Threaded_tree.cpp.i
-
-Threaded_tree.s: Threaded_tree.cpp.s
-
-.PHONY : Threaded_tree.s
-
-# target to generate assembly for a file
-Threaded_tree.cpp.s:
-	$(MAKE) -f CMakeFiles\Lab_4_trees_.dir\build.make CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.s
-.PHONY : Threaded_tree.cpp.s
 
 Tree.obj: Tree.cpp.obj
 
@@ -296,15 +323,18 @@ help:
 	@echo ... Binary_tree.obj
 	@echo ... Binary_tree.i
 	@echo ... Binary_tree.s
+	@echo ... Expr_tree.obj
+	@echo ... Expr_tree.i
+	@echo ... Expr_tree.s
+	@echo ... Expression.obj
+	@echo ... Expression.i
+	@echo ... Expression.s
 	@echo ... Functions.obj
 	@echo ... Functions.i
 	@echo ... Functions.s
 	@echo ... Mode.obj
 	@echo ... Mode.i
 	@echo ... Mode.s
-	@echo ... Threaded_tree.obj
-	@echo ... Threaded_tree.i
-	@echo ... Threaded_tree.s
 	@echo ... Tree.obj
 	@echo ... Tree.i
 	@echo ... Tree.s

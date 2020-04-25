@@ -1,8 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.obj"
+  "CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj"
+  "CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj"
   "CMakeFiles/Lab_4_trees_.dir/Functions.cpp.obj"
   "CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj"
-  "CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj"
   "CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj"
   "CMakeFiles/Lab_4_trees_.dir/main.cpp.obj"
   "Lab_4_trees_.exe"

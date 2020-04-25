@@ -4,26 +4,35 @@
 CMakeFiles/Lab_4_trees_.dir/Binary_tree.cpp.obj
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.cpp
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h
+CMakeFiles/Lab_4_trees_.dir/Expr_tree.cpp.obj
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.cpp
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.h
+CMakeFiles/Lab_4_trees_.dir/Expression.cpp.obj
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.cpp
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.h
 CMakeFiles/Lab_4_trees_.dir/Functions.cpp.obj
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.cpp
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.h
 CMakeFiles/Lab_4_trees_.dir/Mode.cpp.obj
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Mode.cpp
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Mode.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.h
-CMakeFiles/Lab_4_trees_.dir/Threaded_tree.cpp.obj
- D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h
- D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Threaded_tree.cpp
- D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Threaded_tree.h
 CMakeFiles/Lab_4_trees_.dir/Tree.cpp.obj
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.cpp
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.h
 CMakeFiles/Lab_4_trees_.dir/main.cpp.obj
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Binary_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expr_tree.h
+ D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Expression.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Functions.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Mode.h
  D:/C++/1/1 course 2nd term(2020)/Lab.4(trees)/Tree.h

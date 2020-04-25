@@ -7,6 +7,7 @@
 
 #include "Tree.h"
 #include "Binary_tree.h"
+#include "Expression.h"
 
 class Functions {
 public:
@@ -15,6 +16,7 @@ public:
     static void binary_tree_interactive();
     static void tree_demo();
     static void binary_tree_demo();
+    static void expression_interactive();
 
 };
 

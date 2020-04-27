@@ -18,7 +18,7 @@ private:
     //Auxiliary
 
     static std::string minus_spaces(std::string& expr);
-    std::string extra_spaces(std::string& expr);
+    static std::string extra_spaces(std::string& expr);
     static double my_pow(double& base, int& power);
     static int priority(std::string& op);
 
@@ -30,7 +30,6 @@ private:
     std::string parsed;
     std::map <std::string, std::string> variables {};
     std::stack <std::string> operators {};
-//    std::string polish_input;
     Expr_tree expression;
 
     //Transforming
@@ -39,11 +38,27 @@ private:
     void transform_to_polish();
     void build_tree();
 
+    //Counting expression
+
+    void define_variables();
+    void define_interactive(Expr_tree::Node* node);
+    void output_tree();
+    void count();
+
+    //Simplification
+
+    void simplify(Expr_tree exprTree);
+    std::string const_expr(Expr_tree exprTree);
+
+    //Validation
+
+    static bool valid_parentheses(std::string expr);
+
 
 public:
 
     Expression (std::string& input);
-    void count();
+    void count_interactive();
 
 };
 

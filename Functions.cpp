@@ -203,10 +203,9 @@ void Functions::expression_interactive() {
 //        if(key == 1)
 //        if(key == 2)
 //            Mode::demo();
-        std::cout<<expr<<"\n";
         Expression* expression = new Expression(expr);
-        expression->count();
-        std::cout<<"If you want to execute another mode press 'y', press 'n', if you don`t\n";
+        expression->count_interactive();
+        std::cout<<"If you want to do something with another expression press 'y', press 'n', if you don`t\n";
         std::cin>>response;
 
     }

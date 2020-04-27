@@ -23,10 +23,12 @@ public:
         Node* right;
         Node* father;
         int key;
+        bool variable;
 
-        Node(std::string value, int key){
+        Node(std::string value, int key, bool variable){
             this->value = value;
             this->key = key;
+            this->variable = variable;
             this->right = nullptr;
             this->left = nullptr;
             this->father = nullptr;

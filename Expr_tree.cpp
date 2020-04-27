@@ -40,7 +40,6 @@ void Expr_tree::print_all_tree() {
         std::cout<<"Tree is empty, nothing to print\n";
         return;
     }
-    std::cout<<"This printing mode print value of element and path to it by indexes in arrays of sons\n";
     print_node(root);
 
 }

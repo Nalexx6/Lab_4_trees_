@@ -65,6 +65,99 @@ int Expression::priority(std::string &op) {
 
 }
 
+bool Expression::valid_parentheses(std::string expr) {
+
+    std::stack <std::string> par;
+    std::string sign;
+    for(int i = 0; i < expr.length(); i++){
+        sign = expr[i];
+        if(expr[i] == '(')
+            par.push(sign);
+        if(expr[i] == ')') {
+            if (par.empty())
+                return false;
+            if(par.top() == "(")
+                par.pop();
+            else
+                return false;
+        }
+    }
+    return par.empty();
+
+}
+
+std::string Expression::const_expr(Expr_tree exprTree) {
+
+    if(exprTree.root->value == "+" && exprTree.root->left->value == "^" && exprTree.root->right->value == "^"
+        && exprTree.root->left->right->value == "2" && exprTree.root->right->right->value == "2"
+        && exprTree.root->left->left->value == "cos" && exprTree.root->right->left->value == "sin"
+        && exprTree.root->left->left->right->value == exprTree.root->right->left->right->value )
+        return "1";
+    if(exprTree.root->value == "+" && exprTree.root->left->value == "^" && exprTree.root->right->value == "^"
+       && exprTree.root->left->right->value == "2" && exprTree.root->right->right->value == "2"
+       && exprTree.root->left->left->value == "sin" && exprTree.root->right->left->value == "cos"
+       && exprTree.root->left->left->right->value == exprTree.root->right->left->right->value )
+        return "1";
+    if(exprTree.root->value == "cos" && exprTree.root->right->value == "0")
+        return "1";
+    if(exprTree.root->value == "sin" && exprTree.root->right->value == "0")
+        return "0";
+    if(exprTree.root->value == "log" && exprTree.root->right->value == "1")
+        return "0";
+    if(exprTree.root->value == "*" &&
+        ((exprTree.root->right->value == "0" && priority(exprTree.root->left->value) == -1)
+        || (exprTree.root->left->value == "0" && priority(exprTree.root->right->value) == -1)))
+        return "0";
+    if(exprTree.root->value == "/" &&
+       ((exprTree.root->right->value == "0" && !exprTree.root->left->variable)
+        || (exprTree.root->left->value == "0" && !exprTree.root->right->variable)))
+        return "0";
+    if(exprTree.root->value == "-" && exprTree.root->left->value == exprTree.root->right->value)
+        return "0";
+    if(exprTree.root->value == "/" && exprTree.root->left->value == exprTree.root->right->value
+        && !exprTree.root->left->variable)
+        return "1";
+    if(exprTree.root->value == "/" && (exprTree.root->left->value == "-" + exprTree.root->right->value ||
+            exprTree.root->right->value == "-" + exprTree.root->left->value)
+            && !exprTree.root->left->variable)
+        return "-1";
+    if(exprTree.root->value == "+" && (exprTree.root->left->value == "-" + exprTree.root->right->value ||
+                                       exprTree.root->right->value == "-" + exprTree.root->left->value))
+        return "0";
+
+    return "2";
+
+}
+
+void Expression::simplify(Expr_tree exprTree) {
+
+    if(priority(exprTree.root->value) == -1){
+        return;
+    }
+    Expr_tree left_sub, right_sub ;
+    left_sub.root = exprTree.root->left;
+    right_sub.root = exprTree.root->right;
+//    std::cout<<"fsdafdfs"<<std::endl;
+    if(left_sub.root != nullptr) {
+        simplify(left_sub);
+    }
+    if(right_sub.root != nullptr) {
+        simplify(right_sub);
+    }
+//    std::cout<<"kkhgg"<<std::endl;
+
+
+    if(const_expr(exprTree) != "2"){
+        exprTree.root->value =  const_expr((exprTree));
+        exprTree.root->left = nullptr;
+        exprTree.root->right = nullptr;
+
+    }
+
+
+
+}
+
 void Expression::parse() {
 
     input = minus_spaces(input);
@@ -157,18 +250,20 @@ void Expression::transform_to_polish() {
 
 void Expression::build_tree() {
 
-    expression.root = new Expr_tree::Node (blocks[blocks.size() - 1], 0);
+    expression.root = new Expr_tree::Node (blocks[blocks.size() - 1], 0, false);
     Expr_tree::Node* temp = expression.root;
+    bool variable;
     for(int i = blocks.size() - 2; i >= 0; i--){
+        variable = priority(blocks[i]) == -1 && (int(blocks[i][0]) >= 65 || (int(blocks[i][0]) == '-' && int(blocks[i][1]) >= 65));
         if(temp->right == nullptr && priority(temp->value) != -1){
 //            std::cout<<blocks[i]<<" hjjh;\n";
-            temp->right =  new Expr_tree::Node (blocks[i], 1);
+            temp->right =  new Expr_tree::Node (blocks[i], 1, variable);
             temp->right->father = temp;
             temp = temp->right;
         }
         else if(temp->left == nullptr && priority(temp->value) != -1 && priority(temp->value) != 5){
 //            std::cout<<blocks[i]<<" fgfggsd\n";
-            temp->left =  new Expr_tree::Node (blocks[i], 0);
+            temp->left =  new Expr_tree::Node (blocks[i], 0, variable);
             temp->left->father = temp;
             temp = temp->left;
         }
@@ -181,9 +276,45 @@ void Expression::build_tree() {
 
 }
 
+void Expression::define_variables() {
+
+   define_interactive(expression.root);
+
+}
+
+void Expression::define_interactive(Expr_tree::Node *node) {
+
+    if(node == nullptr)
+        return;
+    if(node->variable ){
+        if(variables.find(node->value) == variables.end()) {
+            std::cout << "Enter the value of variable: "<<node->value<<"\n";
+            std::string var;
+            std::cin>>var;
+            variables.insert({node->value, var});
+        }
+        node->value = variables[node->value];
+    }
+    define_interactive(node->left);
+    define_interactive(node->right);
+
+}
+
 void Expression::count() {
 
+
+
+
+}
+
+void Expression::count_interactive() {
+
+
     parse();
+    if(!valid_parentheses(parsed)){
+        std::cout<<"Your expression has invalid parentheses\n";
+        return;
+    }
     std::cout<<parsed<<"\n";
 
     transform_to_polish();
@@ -193,7 +324,6 @@ void Expression::count() {
     }
     std::cout<<"\n";
 
-
     for(int i = 0; i < blocks.size(); i++){
         std::cout<<blocks[i]<<" ";
     }
@@ -201,6 +331,15 @@ void Expression::count() {
     build_tree();
     std::cout<<"tree is built\n";
     expression.print_all_tree();
+
+    std::cout<<"Now we will simplify our tree\n";
+    simplify(expression);
+    expression.print_all_tree();
+
+    define_variables();
+    std::cout<<"This is our tree without variables\n";
+    expression.print_all_tree();
+    output_tree();
 
 
 }

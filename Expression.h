@@ -8,8 +8,7 @@
 #include "Expr_tree.h"
 #include <map>
 #include <stack>
-#include <vector>
-#include <string>
+#include <cmath>
 
 class Expression {
 
@@ -43,7 +42,8 @@ private:
     void define_variables();
     void define_interactive(Expr_tree::Node* node);
     void output_tree();
-    void count();
+    void output_node(Expr_tree::Node* node);
+    double count(bool& is_valid);
 
     //Simplification
 

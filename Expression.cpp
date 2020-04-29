@@ -38,15 +38,6 @@ std::string Expression::extra_spaces(std::string &expr) {
 
 }
 
-double Expression::my_pow(double &base, int &power) {
-
-    double res = 1;
-    for(int i = 0; i < power; i++){
-        res *= base;
-    }
-    return res;
-}
-
 int Expression::priority(std::string &op) {
 
     if(op == "log" || op == "sin" || op == "cos" || op == "tan" || op == "ctg")
@@ -86,7 +77,7 @@ bool Expression::valid_parentheses(std::string expr) {
 
 }
 
-std::string Expression::const_expr(Expr_tree exprTree) {
+std::string Expression::const_expr(Expr_tree exprTree, bool& is_const) {
 
     if(exprTree.root->value == "+" && exprTree.root->left->value == "^" && exprTree.root->right->value == "^"
         && exprTree.root->left->right->value == "2" && exprTree.root->right->right->value == "2"
@@ -136,7 +127,26 @@ std::string Expression::const_expr(Expr_tree exprTree) {
     if(exprTree.root->value == "^" &&
        (exprTree.root->left->value == "0" && priority(exprTree.root->right->value) == -1))
         return "0";
-    return "2";
+    if(exprTree.root->value == "+" &&
+              (exprTree.root->left->value == "0" && priority(exprTree.root->right->value) == -1))
+            return exprTree.root->right->value;
+    if(exprTree.root->value == "+" &&
+       (exprTree.root->right->value == "0" && priority(exprTree.root->left->value) == -1))
+        return exprTree.root->left->value;
+    if(exprTree.root->value == "-" &&
+       (exprTree.root->right->value == "0" && priority(exprTree.root->left->value) == -1))
+        return exprTree.root->left->value;
+    if(exprTree.root->value == "*" &&
+       (exprTree.root->right->value == "1" && priority(exprTree.root->left->value) == -1))
+        return exprTree.root->left->value;
+    if(exprTree.root->value == "*" &&
+       (exprTree.root->left->value == "1" && priority(exprTree.root->right->value) == -1))
+        return exprTree.root->right->value;
+    if(exprTree.root->value == "/" &&
+       (exprTree.root->right->value == "1" && priority(exprTree.root->left->value) == -1))
+        return exprTree.root->left->value;
+    is_const = false;
+    return "0";
 
 }
 
@@ -157,9 +167,10 @@ void Expression::simplify(Expr_tree exprTree) {
     }
 //    std::cout<<"kkhgg"<<std::endl;
 
-
-    if(const_expr(exprTree) != "2"){
-        exprTree.root->value =  const_expr((exprTree));
+    bool is_const = true;
+    const_expr(exprTree, is_const);
+    if(is_const){
+        exprTree.root->value =  const_expr(exprTree, is_const);
         exprTree.root->left = nullptr;
         exprTree.root->right = nullptr;
 
@@ -289,6 +300,7 @@ void Expression::build_tree() {
 
 void Expression::define_variables() {
 
+   variables.clear();
    define_interactive(expression.root);
 
 }
@@ -298,13 +310,35 @@ void Expression::define_interactive(Expr_tree::Node *node) {
     if(node == nullptr)
         return;
     if(node->variable ){
-        if(variables.find(node->value) == variables.end()) {
-            std::cout << "Enter the value of variable: "<<node->value<<"\n";
-            std::string var;
-            std::cin>>var;
-            variables.insert({node->value, var});
+        if (node->value[0] != '-') {
+            if (variables.find(node->value) == variables.end()) {
+                std::cout << "Enter the value of variable: " << node->value << "\n";
+                std::string var;
+                std::cin >> var;
+                variables.insert({node->value, var});
+            }
+            node->value = variables[node->value];
+        } else {
+            std::string temp = "";
+            for (int i = 1; i < node->value.length(); i++) {
+                temp += node->value[i];
+            }
+            if (variables.find(temp) == variables.end()) {
+                std::cout << "Enter the value of variable: " << temp << "\n";
+                std::string var;
+                std::cin >> var;
+                variables.insert({temp, var});
+            }
+            if (variables[temp][0] != '-')
+                node->value = "-" + variables[temp];
+            else {
+                std::string t_val = "";
+                for (int i = 1; i < variables[temp].length(); i++) {
+                    t_val += variables[temp][i];
+                }
+                node->value = t_val;
+            }
         }
-        node->value = variables[node->value];
     }
     define_interactive(node->left);
     define_interactive(node->right);
@@ -420,6 +454,189 @@ double Expression::count(bool& is_valid) {
 
 }
 
+Expr_tree Expression::copy_tree(Expr_tree exprTree) {
+
+    Expr_tree copy;
+    copy_node(exprTree.root, copy.root);
+    return copy;
+
+}
+
+void Expression::copy_node(Expr_tree::Node *node, Expr_tree::Node* copy_n) {
+
+    if(node == nullptr)
+        return;
+    copy_n = new Expr_tree::Node (node->value, node->key, node->variable);
+    copy_node(node->left, copy_n->left);
+    copy_node(node->right, copy_n->right);
+
+}
+
+Expr_tree Expression::derivative(Expr_tree exprTree, std::string &variable) {
+
+    if(exprTree.root->value == variable){
+        exprTree.root->value = "1";
+        return exprTree;
+    }
+    if(priority(exprTree.root->value) == -1 && exprTree.root->value != variable){
+        exprTree.root->value = "0";
+        return exprTree;
+    }
+    if(exprTree.root->value == "+"){
+        Expr_tree left_sub, right_sub;
+        left_sub.root = exprTree.root->left;
+        right_sub.root = exprTree.root->right;
+        derivative(left_sub, variable);
+        derivative(right_sub, variable);
+    }
+    if(exprTree.root->value == "-"){
+        Expr_tree left_sub, right_sub;
+        left_sub.root = exprTree.root->left;
+        right_sub.root = exprTree.root->right;
+        derivative(left_sub, variable);
+        derivative(right_sub, variable);
+    }
+    if(exprTree.root->value == "*"){
+        Expr_tree left_sub, right_sub;
+        Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
+        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
+        exprTree.root->value = "+";
+        left_der->left = exprTree.root->right;
+        right_der->right = exprTree.root->left;
+        left_sub.root = exprTree.root->left;
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = left_der;
+        exprTree.root->right = right_der;
+        left_der->right = copy_tree(right_sub).root;
+        right_der->left = copy_tree(left_sub).root;
+        derivative(left_sub, variable);
+        derivative(right_sub, variable);
+
+    }
+    if(exprTree.root->value == "/"){
+        Expr_tree left_sub, right_sub;
+        Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
+        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
+        Expr_tree::Node* numer = new Expr_tree::Node ("-", 0, false);
+        Expr_tree::Node* denom = new Expr_tree::Node ("^", 1, false);
+        Expr_tree::Node* right_den = new Expr_tree::Node ("2", 1, false);
+        left_der->left = exprTree.root->right;
+        right_der->right = exprTree.root->left;
+        left_sub.root = exprTree.root->left;
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = numer;
+        exprTree.root->right = denom;
+        left_der->right = copy_tree(right_sub).root;
+        right_der->left = copy_tree(left_sub).root;
+        numer->left = left_der;
+        numer->right = right_der;
+        denom->left = copy_tree(right_sub).root;
+        denom->left->key = 0;
+        denom->right = right_den;
+        derivative(left_sub, variable);
+        derivative(right_sub, variable);
+    }
+    if(exprTree.root->value == "sin"){
+        Expr_tree right_sub;
+        Expr_tree::Node* left_der = new Expr_tree::Node ("cos", 0, false);
+//        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
+        exprTree.root->value = "*";
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = left_der;
+        left_der->right = copy_tree(right_sub).root;
+        derivative(right_sub, variable);
+    }
+    if(exprTree.root->value == "cos"){
+        Expr_tree right_sub;
+        Expr_tree::Node* minus = new Expr_tree::Node ("-1", 0, false);
+        Expr_tree::Node* left_der = new Expr_tree::Node ("sin", 0, false);
+        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
+        exprTree.root->value = "*";
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = minus;
+        exprTree.root->right = right_der;
+        right_der->left = left_der;
+        right_der->right = right_sub.root;
+        left_der->right = copy_tree(right_sub).root;
+        derivative(right_sub, variable);
+    }
+//    if(exprTree.root->value == "tan"){
+//        Expr_tree right_sub;
+//        Expr_tree::Node* minus = new Expr_tree::Node ("-1", 0, false);
+//        Expr_tree::Node* left_der = new Expr_tree::Node ("sin", 0, false);
+//        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 0, false);
+//        exprTree.root->value = "*";
+//        right_sub.root = exprTree.root->right;
+//        exprTree.root->left = minus;
+//        exprTree.root->right = right_der;
+//        right_der->left = left_der;
+//        right_der->right = right_sub.root;
+//        left_der->right = copy_tree(right_sub).root;
+//        derivative(right_sub, variable);
+//    }
+//    if(exprTree.root->value == "ctg"){
+//        Expr_tree right_sub;
+//        Expr_tree::Node* minus = new Expr_tree::Node ("-1", 0, false);
+//        Expr_tree::Node* left_der = new Expr_tree::Node ("sin", 0, false);
+//        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 0, false);
+//        exprTree.root->value = "*";
+//        right_sub.root = exprTree.root->right;
+//        exprTree.root->left = minus;
+//        exprTree.root->right = right_der;
+//        right_der->left = left_der;
+//        right_der->right = right_sub.root;
+//        left_der->right = copy_tree(right_sub).root;
+//        derivative(right_sub, variable);
+//    }
+    if(exprTree.root->value == "^" && priority(exprTree.root->right->value) == -1 && !exprTree.root->right->variable){
+        Expr_tree right_sub;
+        Expr_tree::Node* coef = new Expr_tree::Node ("", 0, false);
+        Expr_tree::Node* coef_1 = new Expr_tree::Node ("", 0, false);
+        Expr_tree::Node* minus = new Expr_tree::Node ("-", 1, false);
+        Expr_tree::Node* coef_2 = new Expr_tree::Node ("1", 1, false);
+        Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
+        Expr_tree::Node* right_f = new Expr_tree::Node ("^", 1, false);
+        exprTree.root->value = "*";
+        coef->value = exprTree.root->right->value;
+        coef_1->value = coef->value;
+        right_sub.root = exprTree.root->left;
+        exprTree.root->left = left_der;
+        exprTree.root->right = right_sub.root;
+        left_der->right = right_f;
+        left_der->left = coef;
+        right_f->right = minus;
+        right_f->right = copy_tree(right_sub).root;
+        minus->left = coef_1;
+        minus->right = coef_2;
+        derivative(right_sub, variable);
+    }
+//    if(exprTree.root->value == "^" && priority(exprTree.root->left->value) == -1 && !exprTree.root->left->variable){
+//        Expr_tree right_sub;
+//        Expr_tree::Node* coef = new Expr_tree::Node ("", 0, false);
+//        Expr_tree::Node* coef_1 = new Expr_tree::Node ("", 0, false);
+//        Expr_tree::Node* minus = new Expr_tree::Node ("-", 1, false);
+//        Expr_tree::Node* coef_2 = new Expr_tree::Node ("1", 1, false);
+//        Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
+//        Expr_tree::Node* right_f = new Expr_tree::Node ("^", 1, false);
+//        exprTree.root->value = "*";
+//        coef->value = exprTree.root->right->value;
+//        coef_1->value = coef->value;
+//        right_sub.root = exprTree.root->left;
+//        exprTree.root->left = left_der;
+//        exprTree.root->right = right_sub.root;
+//        left_der->right = right_f;
+//        left_der->left = coef;
+//        right_f->right = minus;
+//        right_f->right = copy_tree(right_sub).root;
+//        minus->left = coef_1;
+//        minus->right = coef_2;
+//        derivative(right_sub, variable);
+//    }
+
+    return exprTree;
+
+}
+
 void Expression::count_interactive() {
 
 
@@ -461,6 +678,30 @@ void Expression::count_interactive() {
         std::cout<<"The result of your expression is: "<<result<<"\n";
     }
 
+}
+
+void Expression::derivative_interactive() {
+
+    parse();
+    if(!valid_parentheses(parsed)){
+        std::cout<<"Your expression has invalid parentheses\n";
+        return;
+    }
+    std::cout<<parsed<<"\n";
+
+    transform_to_polish();
+
+    for(int i = 0; i < blocks.size(); i++){
+        std::cout<<blocks[i]<<" ";
+    }
+    std::cout<<"\n";
+    build_tree();
+    std::cout<<"tree is built\n";
+    expression.print_all_tree();
+
+    std::cout<<"Now we will simplify our tree\n";
+    simplify(expression);
+    expression.print_all_tree();
 
 
 }

@@ -18,9 +18,7 @@ private:
 
     static std::string minus_spaces(std::string& expr);
     static std::string extra_spaces(std::string& expr);
-    static double my_pow(double& base, int& power);
     static int priority(std::string& op);
-
 
     //Body of expression
 
@@ -48,17 +46,24 @@ private:
     //Simplification
 
     void simplify(Expr_tree exprTree);
-    std::string const_expr(Expr_tree exprTree);
+    std::string const_expr(Expr_tree exprTree, bool& is_const);
 
     //Validation
 
     static bool valid_parentheses(std::string expr);
 
+    //Derivation
+
+    Expr_tree copy_tree(Expr_tree exprTree);
+    void copy_node(Expr_tree::Node* node, Expr_tree::Node* copy_n);
+    Expr_tree derivative(Expr_tree exprTree,std::string& variable);
+
 
 public:
 
-    Expression (std::string& input);
+    explicit Expression (std::string& input);
     void count_interactive();
+    void derivative_interactive();
 
 };
 

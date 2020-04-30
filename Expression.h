@@ -52,8 +52,12 @@ private:
 
     static bool valid_parentheses(std::string expr);
 
-    //Derivation
+    //Differentiation
 
+    std::vector <std::string> all_variables;
+    bool existed(std::string value);
+    std::string find_variables();
+    void find_node(Expr_tree::Node* node);
     Expr_tree copy_tree(Expr_tree exprTree);
     void copy_node(Expr_tree::Node* node, Expr_tree::Node* copy_n);
     Expr_tree derivative(Expr_tree exprTree,std::string& variable);
@@ -63,7 +67,7 @@ public:
 
     explicit Expression (std::string& input);
     void count_interactive();
-    void derivative_interactive();
+    void differentiation_interactive();
 
 };
 

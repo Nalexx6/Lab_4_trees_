@@ -195,16 +195,18 @@ void Functions::expression_interactive() {
         std::cout<<"Please enter the CORRECT expression\n";
         std::string expr;
         getline(std::cin>>std::ws, expr);
-//        std::cout<<"Please choose the mode\n"
-//                   "1 - Counting of expression\n"
-//                   "2 - Derivation of expresion\n";
-//        int key;
-//        std::cin>>key;
-//        if(key == 1)
-//        if(key == 2)
-//            Mode::demo();
         Expression* expression = new Expression(expr);
-        expression->count_interactive();
+        std::cout<<"Please choose the mode\n"
+                   "1 - Counting of expression\n"
+                   "2 - Differentiation of expresion\n";
+        int key;
+        std::cin>>key;
+        if(key == 1)
+            expression->count_interactive();
+        if(key == 2)
+            expression->differentiation_interactive();
+
+
         std::cout<<"If you want to do something with another expression press 'y', press 'n', if you don`t\n";
         std::cin>>response;
 

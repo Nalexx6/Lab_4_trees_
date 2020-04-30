@@ -26,8 +26,11 @@ std::string Expression::minus_spaces(std::string &expr) {
 std::string Expression::extra_spaces(std::string &expr) {
 
     std::string answer;
-
-    for(int i = 0; i < expr.length(); i++){
+    int k = 0;
+    while (expr[k] == ' '){
+        k++;
+    }
+    for(int i = k; i < expr.length(); i++){
         while(expr[i] == ' ' && expr[i+1] == ' ' ) {
             i++;
         }
@@ -103,10 +106,12 @@ std::string Expression::const_expr(Expr_tree exprTree, bool& is_const) {
        ((exprTree.root->right->value == "0" && !exprTree.root->left->variable)
         || (exprTree.root->left->value == "0" && !exprTree.root->right->variable)))
         return "0";
-    if(exprTree.root->value == "-" && exprTree.root->left->value == exprTree.root->right->value)
+    if(exprTree.root->value == "-" && exprTree.root->left->value == exprTree.root->right->value
+        && priority(exprTree.root->left->value) == -1) {
         return "0";
+    }
     if(exprTree.root->value == "/" && exprTree.root->left->value == exprTree.root->right->value
-        && !exprTree.root->left->variable)
+        && priority(exprTree.root->right->value) == -1 && !exprTree.root->left->variable)
         return "1";
     if(exprTree.root->value == "/" && (exprTree.root->left->value == "-" + exprTree.root->right->value ||
             exprTree.root->right->value == "-" + exprTree.root->left->value)
@@ -200,6 +205,7 @@ void Expression::parse() {
         }
     }
     parsed = extra_spaces(parsed);
+
     temp_part = "";
     for(int i = 0; i < parsed.length(); i++){
         while(parsed[i] != ' ' && i != parsed.length()){
@@ -276,6 +282,7 @@ void Expression::build_tree() {
     Expr_tree::Node* temp = expression.root;
     bool variable;
     for(int i = blocks.size() - 2; i >= 0; i--){
+//        std::cout<<temp->value<<"\t"<<blocks[i]<<"\n";
         variable = priority(blocks[i]) == -1 && (int(blocks[i][0]) >= 65 || (int(blocks[i][0]) == '-' && int(blocks[i][1]) >= 65));
         if(temp->right == nullptr && priority(temp->value) != -1){
 //            std::cout<<blocks[i]<<" hjjh;\n";
@@ -457,6 +464,8 @@ double Expression::count(bool& is_valid) {
 Expr_tree Expression::copy_tree(Expr_tree exprTree) {
 
     Expr_tree copy;
+    Expr_tree::Node* copy_root = new Expr_tree::Node(exprTree.root->value, exprTree.root->key, exprTree.root->variable);
+    copy.root = copy_root;
     copy_node(exprTree.root, copy.root);
     return copy;
 
@@ -464,11 +473,65 @@ Expr_tree Expression::copy_tree(Expr_tree exprTree) {
 
 void Expression::copy_node(Expr_tree::Node *node, Expr_tree::Node* copy_n) {
 
+    if(node->left != nullptr) {
+        Expr_tree::Node *copy_left = new Expr_tree::Node(node->left->value, node->left->key, node->left->variable);
+        copy_n->left = copy_left;
+        copy_left->father = copy_n;
+        copy_node(node->left, copy_n->left);
+    }
+
+    if(node->right != nullptr) {
+        Expr_tree::Node *copy_right = new Expr_tree::Node(node->right->value, node->right->key, node->right->variable);
+        copy_n->right = copy_right;
+        copy_right->father = copy_n;
+        copy_node(node->right, copy_n->right);
+    }
+
+}
+
+bool Expression::existed(std::string value) {
+
+    for(int i = 0; i < all_variables.size(); i++){
+        if(all_variables[i] == value)
+            return true;
+    }
+    return false;
+}
+
+std::string Expression::find_variables() {
+
+    find_node(expression.root);
+    for(int i = 0; i < all_variables.size(); i++){
+        std::cout<<i<<":\t"<< all_variables[i]<<"\n";
+    }
+    std::cout<<"Please, enter the number of variable for which you want to find derivative\n";
+    unsigned index;
+    std::cin>>index;
+    return all_variables[index];
+
+}
+
+void Expression::find_node(Expr_tree::Node *node) {
+
     if(node == nullptr)
         return;
-    copy_n = new Expr_tree::Node (node->value, node->key, node->variable);
-    copy_node(node->left, copy_n->left);
-    copy_node(node->right, copy_n->right);
+    if(node->variable){
+        if(node->value[0] != '-') {
+            if(!existed(node->value))
+                all_variables.emplace_back(node->value);
+
+        }
+        else{
+            std::string temp = "";
+            for (int i = 1; i < node->value.length(); i++) {
+                temp += node->value[i];
+            }
+            if(!existed(temp))
+                all_variables.emplace_back(temp);
+        }
+    }
+    find_node(node->left);
+    find_node(node->right);
 
 }
 
@@ -499,16 +562,22 @@ Expr_tree Expression::derivative(Expr_tree exprTree, std::string &variable) {
     if(exprTree.root->value == "*"){
         Expr_tree left_sub, right_sub;
         Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
+        left_der->father = exprTree.root;
         Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
+        right_der->father = exprTree.root;
         exprTree.root->value = "+";
-        left_der->left = exprTree.root->right;
-        right_der->right = exprTree.root->left;
+        left_der->left = exprTree.root->left;
+        left_der->left->father = left_der;
+        right_der->right = exprTree.root->right;
+        right_der->right->father = right_der;
         left_sub.root = exprTree.root->left;
         right_sub.root = exprTree.root->right;
         exprTree.root->left = left_der;
         exprTree.root->right = right_der;
         left_der->right = copy_tree(right_sub).root;
+        left_der->right->father = left_der;
         right_der->left = copy_tree(left_sub).root;
+        right_der->left->father = right_der;
         derivative(left_sub, variable);
         derivative(right_sub, variable);
 
@@ -518,32 +587,44 @@ Expr_tree Expression::derivative(Expr_tree exprTree, std::string &variable) {
         Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
         Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
         Expr_tree::Node* numer = new Expr_tree::Node ("-", 0, false);
+        numer->father = exprTree.root;
         Expr_tree::Node* denom = new Expr_tree::Node ("^", 1, false);
+        denom->father = exprTree.root;
         Expr_tree::Node* right_den = new Expr_tree::Node ("2", 1, false);
-        left_der->left = exprTree.root->right;
-        right_der->right = exprTree.root->left;
+        left_der->left = exprTree.root->left;
+        left_der->left->father = left_der;
+        right_der->right = exprTree.root->right;
+        right_der->right->father = right_der;
         left_sub.root = exprTree.root->left;
         right_sub.root = exprTree.root->right;
         exprTree.root->left = numer;
         exprTree.root->right = denom;
         left_der->right = copy_tree(right_sub).root;
+        left_der->right->father = left_der;
         right_der->left = copy_tree(left_sub).root;
+        right_der->left->father = right_der;
         numer->left = left_der;
+        left_der->father = numer;
         numer->right = right_der;
+        right_der->father = numer;
         denom->left = copy_tree(right_sub).root;
+        denom->left->father = denom;
         denom->left->key = 0;
         denom->right = right_den;
+        denom->right->father = denom;
         derivative(left_sub, variable);
         derivative(right_sub, variable);
     }
     if(exprTree.root->value == "sin"){
         Expr_tree right_sub;
         Expr_tree::Node* left_der = new Expr_tree::Node ("cos", 0, false);
+        left_der->father = exprTree.root;
 //        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 1, false);
         exprTree.root->value = "*";
         right_sub.root = exprTree.root->right;
         exprTree.root->left = left_der;
         left_der->right = copy_tree(right_sub).root;
+        left_der->right->father = left_der;
         derivative(right_sub, variable);
     }
     if(exprTree.root->value == "cos"){
@@ -554,40 +635,78 @@ Expr_tree Expression::derivative(Expr_tree exprTree, std::string &variable) {
         exprTree.root->value = "*";
         right_sub.root = exprTree.root->right;
         exprTree.root->left = minus;
+        minus->father = exprTree.root;
         exprTree.root->right = right_der;
+        right_der->father = exprTree.root;
         right_der->left = left_der;
+        left_der->father = right_der;
         right_der->right = right_sub.root;
         left_der->right = copy_tree(right_sub).root;
+        left_der->right->father = left_der;
         derivative(right_sub, variable);
     }
-//    if(exprTree.root->value == "tan"){
-//        Expr_tree right_sub;
-//        Expr_tree::Node* minus = new Expr_tree::Node ("-1", 0, false);
-//        Expr_tree::Node* left_der = new Expr_tree::Node ("sin", 0, false);
-//        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 0, false);
-//        exprTree.root->value = "*";
-//        right_sub.root = exprTree.root->right;
-//        exprTree.root->left = minus;
-//        exprTree.root->right = right_der;
-//        right_der->left = left_der;
-//        right_der->right = right_sub.root;
-//        left_der->right = copy_tree(right_sub).root;
-//        derivative(right_sub, variable);
-//    }
-//    if(exprTree.root->value == "ctg"){
-//        Expr_tree right_sub;
-//        Expr_tree::Node* minus = new Expr_tree::Node ("-1", 0, false);
-//        Expr_tree::Node* left_der = new Expr_tree::Node ("sin", 0, false);
-//        Expr_tree::Node* right_der = new Expr_tree::Node ("*", 0, false);
-//        exprTree.root->value = "*";
-//        right_sub.root = exprTree.root->right;
-//        exprTree.root->left = minus;
-//        exprTree.root->right = right_der;
-//        right_der->left = left_der;
-//        right_der->right = right_sub.root;
-//        left_der->right = copy_tree(right_sub).root;
-//        derivative(right_sub, variable);
-//    }
+    if(exprTree.root->value == "tan"){
+        Expr_tree right_sub;
+        Expr_tree::Node* coef = new Expr_tree::Node ("1", 0, false);
+        Expr_tree::Node* left_der = new Expr_tree::Node ("cos", 0, false);
+        Expr_tree::Node* divide = new Expr_tree::Node ("/", 0, false);
+        Expr_tree::Node* pow = new Expr_tree::Node ("^", 1, false);
+        Expr_tree::Node* coef_1 = new Expr_tree::Node ("2", 1, false);
+
+        exprTree.root->value = "*";
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = divide;
+        divide->father = exprTree.root;
+        divide->left = coef;
+        coef->father = divide;
+        divide->right = pow;
+        pow->father = divide;
+        pow->left = left_der;
+        left_der->father = pow;
+        pow->right = coef_1;
+        coef_1->father = pow;
+        left_der->right = copy_tree(right_sub).root;
+        left_der->right->father = left_der;
+        derivative(right_sub, variable);
+    }
+    if(exprTree.root->value == "ctg"){
+        Expr_tree right_sub;
+        Expr_tree::Node* coef = new Expr_tree::Node ("-1", 0, false);
+        Expr_tree::Node* left_der = new Expr_tree::Node ("sin", 0, false);
+        Expr_tree::Node* divide = new Expr_tree::Node ("/", 0, false);
+        Expr_tree::Node* pow = new Expr_tree::Node ("^", 1, false);
+        Expr_tree::Node* coef_1 = new Expr_tree::Node ("2", 1, false);
+
+        exprTree.root->value = "*";
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = divide;
+        divide->father = exprTree.root;
+        divide->left = coef;
+        coef->father = divide;
+        divide->right = pow;
+        pow->father = divide;
+        pow->left = left_der;
+        left_der->father = pow;
+        pow->right = coef_1;
+        coef_1->father = pow;
+        left_der->right = copy_tree(right_sub).root;
+        left_der->right->father = left_der;
+        derivative(right_sub, variable);
+    }
+    if(exprTree.root->value == "log"){
+        Expr_tree right_sub;
+        Expr_tree::Node* coef = new Expr_tree::Node ("1", 0, false);
+        Expr_tree::Node* divide = new Expr_tree::Node ("/", 0, false);
+        exprTree.root->value = "*";
+        right_sub.root = exprTree.root->right;
+        exprTree.root->left = divide;
+        divide->father = exprTree.root;
+        divide->left = coef;
+        coef->father = divide;
+        divide->right = copy_tree(right_sub).root;
+        divide->right->father = divide;
+        derivative(right_sub, variable);
+    }
     if(exprTree.root->value == "^" && priority(exprTree.root->right->value) == -1 && !exprTree.root->right->variable){
         Expr_tree right_sub;
         Expr_tree::Node* coef = new Expr_tree::Node ("", 0, false);
@@ -595,43 +714,60 @@ Expr_tree Expression::derivative(Expr_tree exprTree, std::string &variable) {
         Expr_tree::Node* minus = new Expr_tree::Node ("-", 1, false);
         Expr_tree::Node* coef_2 = new Expr_tree::Node ("1", 1, false);
         Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
-        Expr_tree::Node* right_f = new Expr_tree::Node ("^", 1, false);
+        Expr_tree::Node* pow = new Expr_tree::Node ("^", 1, false);
         exprTree.root->value = "*";
         coef->value = exprTree.root->right->value;
         coef_1->value = coef->value;
         right_sub.root = exprTree.root->left;
         exprTree.root->left = left_der;
+        left_der->father = exprTree.root;
         exprTree.root->right = right_sub.root;
-        left_der->right = right_f;
+        right_sub.root->father = exprTree.root;
+        left_der->right = pow;
+        pow->father = left_der;
         left_der->left = coef;
-        right_f->right = minus;
-        right_f->right = copy_tree(right_sub).root;
+        coef->father = left_der;
+        pow->right = minus;
+        minus->father = pow;
+        pow->left = copy_tree(right_sub).root;
+        pow->left->father = pow;
         minus->left = coef_1;
+        coef_1->father = minus;
         minus->right = coef_2;
+        coef_2->father = minus;
         derivative(right_sub, variable);
     }
-//    if(exprTree.root->value == "^" && priority(exprTree.root->left->value) == -1 && !exprTree.root->left->variable){
-//        Expr_tree right_sub;
-//        Expr_tree::Node* coef = new Expr_tree::Node ("", 0, false);
-//        Expr_tree::Node* coef_1 = new Expr_tree::Node ("", 0, false);
-//        Expr_tree::Node* minus = new Expr_tree::Node ("-", 1, false);
-//        Expr_tree::Node* coef_2 = new Expr_tree::Node ("1", 1, false);
-//        Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
-//        Expr_tree::Node* right_f = new Expr_tree::Node ("^", 1, false);
-//        exprTree.root->value = "*";
-//        coef->value = exprTree.root->right->value;
-//        coef_1->value = coef->value;
-//        right_sub.root = exprTree.root->left;
-//        exprTree.root->left = left_der;
-//        exprTree.root->right = right_sub.root;
-//        left_der->right = right_f;
-//        left_der->left = coef;
-//        right_f->right = minus;
-//        right_f->right = copy_tree(right_sub).root;
-//        minus->left = coef_1;
-//        minus->right = coef_2;
-//        derivative(right_sub, variable);
-//    }
+    if(exprTree.root->value == "^" && priority(exprTree.root->left->value) == -1 && !exprTree.root->left->variable){
+        Expr_tree right_sub;
+        Expr_tree::Node* coef = new Expr_tree::Node ("", 0, false);
+        Expr_tree::Node* coef_1 = new Expr_tree::Node ("", 0, false);
+        Expr_tree::Node* minus = new Expr_tree::Node ("-", 1, false);
+        Expr_tree::Node* coef_2 = new Expr_tree::Node ("1", 1, false);
+        Expr_tree::Node* left_der = new Expr_tree::Node ("*", 0, false);
+        Expr_tree::Node* pow = new Expr_tree::Node ("^", 1, false);
+        exprTree.root->value = "*";
+        coef->value = exprTree.root->right->value;
+        coef_1->value = coef->value;
+        right_sub.root = exprTree.root->left;
+        exprTree.root->left = left_der;
+        left_der->father = exprTree.root;
+        exprTree.root->right = right_sub.root;
+        right_sub.root->father = exprTree.root;
+        left_der->right = pow;
+        pow->father = left_der;
+        left_der->left = coef;
+        coef->father = left_der;
+        pow->right = minus;
+        minus->father = pow;
+        pow->left = copy_tree(right_sub).root;
+        pow->left->father = pow;
+        minus->left = coef_1;
+        coef_1->father = minus;
+        minus->right = coef_2;
+        coef_2->father = minus;
+        derivative(right_sub, variable);
+    }
+
 
     return exprTree;
 
@@ -680,7 +816,7 @@ void Expression::count_interactive() {
 
 }
 
-void Expression::derivative_interactive() {
+void Expression::differentiation_interactive() {
 
     parse();
     if(!valid_parentheses(parsed)){
@@ -703,5 +839,14 @@ void Expression::derivative_interactive() {
     simplify(expression);
     expression.print_all_tree();
 
+    std:: string variable = find_variables();
+    std::cout<<"Now we will differentiate our tree\n";
 
+    derivative(expression, variable);
+
+    expression.print_all_tree();
+
+    std::cout<<"Now we will simplify our tree\n";
+    simplify(expression);
+    expression.print_all_tree();
 }

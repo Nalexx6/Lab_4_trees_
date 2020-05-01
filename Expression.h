@@ -45,8 +45,8 @@ private:
 
     //Simplification
 
-    void simplify(Expr_tree exprTree);
-    std::string const_expr(Expr_tree exprTree, bool& is_const);
+    void simplify(Expr_tree& exprTree);
+    Expr_tree const_expr(Expr_tree exprTree, bool& is_const);
 
     //Validation
 

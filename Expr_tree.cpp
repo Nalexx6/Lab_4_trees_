@@ -56,7 +56,8 @@ void Expr_tree::print_node(Expr_tree::Node *node) {
     if(node == root){
         std::cout<<" root - no path\n";
     }
-    else {        for (int i = 0; i < path.size(); i++){
+    else {
+        for (int i = 0; i < path.size(); i++){
             std::cout<<"\t"<<path[i];
         }
         std::cout<<std::endl;

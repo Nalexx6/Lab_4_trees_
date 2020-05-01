@@ -39,8 +39,12 @@ void Functions::binary_tree_interactive() {
                     path.push_back(key);
             }
             Binary_tree* remainder = tree->delete_element(path);
-            std::cout<<"There is remanding tree after deleting\n";
-            remainder->print_all_tree(false);
+            std::cout<<"Enter 0 if you want to delete remaining tree, or enter 1 if you want to do something with it\n";
+            std::cin>>key;
+            if(key) {
+                std::cout << "There is remanding tree after deleting\n";
+                remainder->print_all_tree(false);
+            }
             delete remainder;
         }
         if(key == 4){
@@ -100,8 +104,12 @@ void Functions::tree_interactive() {
                     path.push_back(key);
             }
             Tree* remainder = tree->delete_element(path);
-            std::cout<<"There is remanding tree after deleting\n";
-            remainder->print_all_tree();
+            std::cout<<"Enter 0 if you want to delete remaining tree, or enter 1 if you want to do something with it\n";
+            std::cin>>key;
+            if(key) {
+                std::cout << "There is remaining tree after deleting\n";
+                remainder->print_all_tree();
+            }
             delete remainder;
         }
 

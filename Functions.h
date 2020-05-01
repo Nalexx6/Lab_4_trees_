@@ -17,6 +17,7 @@ public:
     static void tree_demo();
     static void binary_tree_demo();
     static void expression_interactive();
+    static void expression_demo();
 
 };
 

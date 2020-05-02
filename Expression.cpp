@@ -155,13 +155,13 @@ Expr_tree Expression::const_expr(Expr_tree exprTree, bool& is_const) {
         exprTree.root->right = nullptr;
         return exprTree;
     }
-//    if(exprTree.root->value == "+" && (exprTree.root->left->value == "-" + exprTree.root->right->value ||
-//                                       exprTree.root->right->value == "-" + exprTree.root->left->value)){
-//        exprTree.root->value = "0";
-//        exprTree.root->left = nullptr;
-//        exprTree.root->right = nullptr;
-//        return exprTree;
-//    }
+    if(exprTree.root->value == "+" && (exprTree.root->left->value == "-" + exprTree.root->right->value ||
+                                       exprTree.root->right->value == "-" + exprTree.root->left->value)){
+        exprTree.root->value = "0";
+        exprTree.root->left = nullptr;
+        exprTree.root->right = nullptr;
+        return exprTree;
+    }
     if(exprTree.root->value == "^" &&
        (exprTree.root->right->value == "0" && priority(exprTree.root->left->value) == -1)){
         exprTree.root->value = "1";
@@ -279,6 +279,21 @@ Expr_tree Expression::const_expr(Expr_tree exprTree, bool& is_const) {
         }
         return copy;
     }
+    if(exprTree.root->value == "^" && exprTree.root->right->value == "1" ){
+        Expr_tree left_sub;
+        left_sub.root = exprTree.root->left;
+        Expr_tree copy = copy_tree(left_sub);
+        copy.root->father = exprTree.root->father;
+        if(exprTree.root != expression.root) {
+            if (exprTree.root->key) {
+                exprTree.root->father->right = copy.root;
+                copy.root->key = 1;
+            } else{
+                exprTree.root->father->left = copy.root;
+            }
+        }
+        return copy;
+    }
     return exprTree;
 
 
@@ -350,6 +365,16 @@ void Expression::transform_to_polish() {
 //        std::cout<<blocks[i]<<"\n";
 //    }
 //    std::cout<<"\n";
+    if(blocks[0] == "-sin" || blocks[0] == "-cos" || blocks[0] == "-tan" || blocks[0] == "-ctg" || blocks[0] == "-log"){
+//        std::cout<<"dffd\n";
+        std::string temp = "";
+        for(int i = 1; i < blocks[0].length(); i++){
+            temp += blocks[0][i];
+        }
+        blocks[0] = temp;
+        blocks.emplace(blocks.begin(), "*");
+        blocks.emplace(blocks.begin(), "-1");
+    }
     int size = blocks.size();
     for(int i = 0; i < size; i++){
         if(priority(blocks[i]) == -1){
@@ -623,17 +648,22 @@ bool Expression::existed(std::string value) {
     return false;
 }
 
-std::string Expression::find_variables() {
+std::string Expression::find_variables(bool demo) {
 
     find_node(expression.root);
     for(int i = 0; i < all_variables.size(); i++){
         std::cout<<i<<":\t"<< all_variables[i]<<"\n";
     }
-    std::cout<<"Please, enter the number of variable for which you want to find derivative\n";
-    unsigned index;
-    std::cin>>index;
-    return all_variables[index];
-
+    if(!demo) {
+        std::cout << "Please, enter the number of variable for which you want to find derivative\n";
+        unsigned index;
+        std::cin >> index;
+        return all_variables[index];
+    }
+    else{
+        std::cout<<"We will find derivative by variable: "<<all_variables[0]<<"\n";
+        return all_variables[0];
+    }
 }
 
 void Expression::find_node(Expr_tree::Node *node) {
@@ -954,7 +984,7 @@ void Expression::count_interactive() {
     bool is_valid = true;
     double result = count(is_valid);
     if(!is_valid){
-        std::cout<<"Your expression is unvalid, please enter the valid once\n";
+        std::cout<<"Your expression is invalid, please enter the valid once\n";
     } else{
         std::cout<<"The result of your expression is: "<<result<<"\n";
     }
@@ -984,16 +1014,198 @@ void Expression::differentiation_interactive() {
     simplify(expression);
     expression.print_all_tree();
 
-    std:: string variable = find_variables();
+    std:: string variable = find_variables(false);
     std::cout<<"Now we will differentiate our tree\n";
 
     derivative(expression, variable);
 
     expression.print_all_tree();
 
-//    std::cout<<"Now we will simplify our tree\n";
     simplify(expression);
     std::cout<<"Now we will simplify our tree\n";
     std::cout<<expression.root->left->value;
     expression.print_all_tree();
+
+    std::cout<<"This our derivative in polish notation\n";
+    output_tree();
+    for(int i = 0; i < blocks.size(); i++){
+        std::cout<<blocks[i]<<" ";
+    }
+    std::cout<<"\n";
+
 }
+
+void Expression::define_variables(std::vector<std::string>& values) {
+
+    variables.clear();
+    define_node(expression.root, values);
+
+}
+
+void Expression::define_node(Expr_tree::Node *node, std::vector<std::string> &values) {
+
+    if(node == nullptr)
+        return;
+    if(node->variable ){
+        if (node->value[0] != '-') {
+            if (variables.find(node->value) == variables.end()) {
+                variables.insert({node->value, values[0]});
+                values.erase(values.begin());
+            }
+            node->value = variables[node->value];
+        } else {
+            std::string temp = "";
+            for (int i = 1; i < node->value.length(); i++) {
+                temp += node->value[i];
+            }
+            if (variables.find(temp) == variables.end()) {
+                variables.insert({temp, values[0]});
+                values.erase(values.begin());
+            }
+            if (variables[temp][0] != '-')
+                node->value = "-" + variables[temp];
+            else {
+                std::string t_val = "";
+                for (int i = 1; i < variables[temp].length(); i++) {
+                    t_val += variables[temp][i];
+                }
+                node->value = t_val;
+            }
+        }
+    }
+    define_node(node->left,values);
+    define_node(node->right,values);
+
+}
+
+void Expression::count_demo(std::vector<std::string>& values) {
+
+    parse();
+    std::string breakpoint;
+    std::cout << "This is our expression: " << parsed << "\n";
+
+    if (!valid_parentheses(parsed)) {
+        std::cout << "Your expression has invalid parentheses\n\n";
+        return;
+    }
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    transform_to_polish();
+    std::cout << "This is our expression in polish notation\n";
+
+    for (int i = 0; i < blocks.size(); i++) {
+        std::cout << blocks[i] << " ";
+    }
+    std::cout << "\n";
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    build_tree();
+    std::cout << "This is tree our expression\n";
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout << "Now we will simplify our tree\n";
+    simplify(expression);
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    define_variables(values);
+    std::cout << "This is our tree without variables\n";
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout << "Now we will simplify our tree again\n";
+    simplify(expression);
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout << "This is our tree in polish notation\n";
+    output_tree();
+    for (int i = 0; i < blocks.size(); i++) {
+        std::cout << blocks[i] << " ";
+    }
+    std::cout << "\n";
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout << "Now we will count our expression\n";
+    bool is_valid = true;
+    double result = count(is_valid);
+    if (!is_valid) {
+        std::cout << "Expression is invalid\n\n";
+    } else {
+        std::cout << "The result of our expression is: " << result << "\n";
+    }
+}
+
+void Expression::differentiation_demo() {
+
+    parse();
+    std::string breakpoint;
+    std::cout << "This is our expression: " << parsed << "\n";
+
+    if (!valid_parentheses(parsed)) {
+        std::cout << "Your expression has invalid parentheses\n\n";
+        return;
+    }
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    transform_to_polish();
+    std::cout << "This is our expression in polish notation\n";
+
+    for (int i = 0; i < blocks.size(); i++) {
+        std::cout << blocks[i] << " ";
+    }
+    std::cout << "\n";
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    build_tree();
+    std::cout << "This is tree our expression\n";
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout << "Now we will simplify our tree\n";
+    simplify(expression);
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std:: string variable = find_variables(true);
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout<<"This is our tree after differentiation\n";
+    derivative(expression, variable);
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    simplify(expression);
+    std::cout<<"Now we will simplify our tree again\n";
+    expression.print_all_tree();
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+    std::cout<<"This our derivative in polish notation\n";
+    output_tree();
+    for(int i = 0; i < blocks.size(); i++){
+        std::cout<<blocks[i]<<" ";
+    }
+    std::cout<<"\n";
+    std::cout << "cin anything to continue\n";
+    std::cin >> breakpoint;
+
+}
+
+
+
+

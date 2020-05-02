@@ -50,7 +50,6 @@ public:
     //Delete
 
     Tree* delete_element(std::vector <int> &path);
-//    void delete_element_2(std::vector <int> &path);
 
 
 

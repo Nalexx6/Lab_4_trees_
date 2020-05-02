@@ -43,6 +43,11 @@ private:
     void output_node(Expr_tree::Node* node);
     double count(bool& is_valid);
 
+    //Count demo
+
+    void define_variables(std::vector<std::string>& values);
+    void define_node(Expr_tree::Node* node, std::vector<std::string>& values);
+
     //Simplification
 
     void simplify(Expr_tree& exprTree);
@@ -56,7 +61,7 @@ private:
 
     std::vector <std::string> all_variables;
     bool existed(std::string value);
-    std::string find_variables();
+    std::string find_variables(bool demo);
     void find_node(Expr_tree::Node* node);
     Expr_tree copy_tree(Expr_tree exprTree);
     void copy_node(Expr_tree::Node* node, Expr_tree::Node* copy_n);
@@ -66,9 +71,16 @@ private:
 public:
 
     explicit Expression (std::string& input);
+
+    //Interactive
+
     void count_interactive();
     void differentiation_interactive();
 
+    //Demo
+
+    void count_demo(std::vector<std::string>& values);
+    void differentiation_demo();
 };
 
 

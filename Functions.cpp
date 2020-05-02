@@ -221,3 +221,68 @@ void Functions::expression_interactive() {
     }
 
 }
+
+void Functions::expression_demo() {
+
+    std::ifstream f("../Files/Expression demo default par-s.txt");
+    std::string expr_1, expr_2, expr_3, expr_4, expr_5;
+    std::string val;
+    std::vector<std::string> values_1, values_2, values_3, values_4;
+
+    getline(f, expr_1);
+    f>>val;
+    values_1.push_back(val);
+//    getline(f, expr_2);
+    f>>expr_2;
+    for(int i =0; i < 2; i++) {
+        f >> val;
+        values_2.push_back(val);
+    }
+//    getline(f, expr_3);
+    f>>expr_3;
+    f>>val;
+    values_3.push_back(val);
+//    getline(f, expr_4);
+    f>>expr_4;
+    for(int i =0; i < 3; i++) {
+        f >> val;
+        values_4.push_back(val);
+    }
+    f>>expr_5;
+    std::cout<<"Firstly we will make sure that validation check is working\n"
+               "cin anything to continue\n";
+    std::string breakpoint;
+    std::cin>>breakpoint;
+    std::cout<<"First check is valid parentheses\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+
+    Expression* expression_1 = new Expression(expr_1);
+    expression_1->count_demo(values_1);
+    std::cout<<"Second check is argument of log > 0\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    Expression* expression_2 = new Expression(expr_2);
+    expression_2->count_demo(values_2);
+    std::cout<<"Third check is dividing by 0\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    Expression* expression_3 = new Expression(expr_3);
+    expression_3->count_demo(values_3);
+    std::cout<<"Now we will count the expression\n"
+               <<expr_4<<"\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    Expression* expression_4 = new Expression(expr_4);
+    expression_4->count_demo(values_4);
+    std::cout<<"Now we will find derivative for expression\n"
+               <<expr_5<<"\n"
+               "cin anything to continue\n";
+    std::cin>>breakpoint;
+    Expression* expression_5 = new Expression(expr_5);
+    expression_5->differentiation_demo();
+
+    std::cout<<"This is the end of demo mode\n";
+
+
+}

@@ -8,6 +8,7 @@
 #include "Tree.h"
 #include "Binary_tree.h"
 #include "Expression.h"
+#include <fstream>
 
 class Functions {
 public:

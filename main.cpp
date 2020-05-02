@@ -4,6 +4,7 @@
 
 int main() {
 
+    //Variant: 1, 2, 3, 11, 13, 15, 18, 20, 23
     char response = 'y';
     while(response == 'y') {
 

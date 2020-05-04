@@ -51,7 +51,7 @@ private:
     //Simplification
 
     void simplify(Expr_tree& exprTree);
-    Expr_tree const_expr(Expr_tree exprTree, bool& is_const);
+    Expr_tree const_expr(Expr_tree exprTree);
 
     //Validation
 

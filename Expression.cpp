@@ -98,7 +98,8 @@ Expr_tree Expression::const_expr(Expr_tree exprTree) {
     if(exprTree.root->value == "+" && exprTree.root->left->value == "^" && exprTree.root->right->value == "^"
        && exprTree.root->left->right->value == "2" && exprTree.root->right->right->value == "2"
        && exprTree.root->left->left->value == "sin" && exprTree.root->right->left->value == "cos"
-       && exprTree.root->left->left->right->value == exprTree.root->right->left->right->value ){
+       && exprTree.root->left->left->right->value == exprTree.root->right->left->right->value &&
+       priority(exprTree.root->right->left->right->value) == -1){
         exprTree.root->value = "1";
         exprTree.root->left = nullptr;
         exprTree.root->right = nullptr;
